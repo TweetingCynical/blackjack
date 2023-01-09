@@ -159,6 +159,8 @@ function start() {
     // Check if user already has Blackjack
     if (userScore === blackjack) {
       alert("Blackjack! You win!");
+      userWins ++;
+      end()
     // Begin user gameplay state
     } else {
       userLoop();
