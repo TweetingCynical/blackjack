@@ -5,6 +5,8 @@ let dealerScore = 0;
 let userScore = 0;
 const blackjack = 21;
 let output;
+let userWins = 0;
+let dealerWins = 0;
 
 // Choose random number
 function randHand(x,y) {
@@ -45,7 +47,8 @@ function userLoop() {
       alert(`
       You are bust!
       ${output}`);
-      break;
+      dealerWins ++;
+      end()
     } 
     // User stick, begin dealer gameplay state
     else {
@@ -64,7 +67,7 @@ let hit = true;
       // Dealer always hits when his score is less than the users && less than 17
       if (dealerScore < 17) {
       alert(`
-      ${output}.
+      ${output}
       Dealer will draw a new card.`);
       dealerScore = dealNew(dealerHand, dealerScore);
       }
@@ -72,8 +75,9 @@ let hit = true;
       else if (dealerScore > 21){
       alert(`
       Dealer bust!
-      ${output}.`);
-      break;
+      ${output}`);
+      userWins ++
+      end()
       }
       // Dealer stick (17 or over && not bust)
       else {
@@ -85,8 +89,9 @@ let hit = true;
     else if (dealerScore > 21){
       alert(`
       Dealer bust!
-      ${output}.`);
-      break;
+      ${output}`);
+      userWins ++;
+      end()
     }
     // Dealer stick (17 or over && not bust)
     else {
@@ -107,21 +112,23 @@ function compareScores() {
       alert(`
       You win! 
       ${output}`);
-      return;
+      userWins ++
+      end()
   }
   // Dealer win state
   else if (userComp > dealComp) {
       alert(`
       You lose! 
       ${output}`);
-      return;
+      dealerWins ++;
+      end()
   }
   // Draw state
   else {
       alert(`
       You draw!
       ${output}`);
-      return;
+      end()
   }
 }
 
@@ -130,6 +137,15 @@ function generateScoreMsg(userHand, userScore, dealerHand, dealerScore) {
   return `
       Your hand is ${userHand.join(", ")} and your score is ${userScore}.
       Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`;
+}
+
+function end() {
+  dealerHand.length = 0;
+  userHand.length = 0;
+  dealerScore = 0;
+  userScore = 0;
+  alert(`You have ${userWins} win(s). Dealer has ${dealerWins} win(s).`)
+  start()
 }
 
 function start() {
@@ -149,7 +165,8 @@ function start() {
     }
   }
   else {
-    alert("Game Over!");
+    alert(`Game Over!\nYou had ${userWins} win(s). Dealer had ${dealerWins} win(s).`);
+    return;
   }
 }
 
