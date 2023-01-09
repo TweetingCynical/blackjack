@@ -67,6 +67,7 @@ Some of the key JavaScript skills being utilised:
 ## Suggested future changes
 
 - Add images and score board to html so that game becomes based in browser and not through console;
+- Add an output option to limit the repetition of the message displayed in alerts;
 - Add a play again option for user to play a  game from the start (possibly keeping a running total of all wins). This would involve resetting the stored arrays and running scores;
 
 ## Screenshot
