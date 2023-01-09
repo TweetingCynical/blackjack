@@ -168,7 +168,7 @@ function start() {
   }
   else {
     alert(`Game Over!\nYou had ${userWins} win(s). Dealer had ${dealerWins} win(s).`);
-    return;
+    return false;
   }
 }
 
