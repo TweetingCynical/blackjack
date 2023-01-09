@@ -11,9 +11,13 @@ function randHand(x,y) {
 }
 
 // Deal a new hand
+// arr relates to either dealerHand or userHand
+// whoScore related to either dealerScore or userScore
 function dealNew(arr, whoScore) {
   randNew = randHand(2,11)
+  // Push new hand to array
   addNew = arr.push(randNew);
+  // Add new hand score to player's score
   whoScore += randNew;
   return whoScore;
 }
