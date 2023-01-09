@@ -39,6 +39,8 @@ Steps to achieving the working game:
   - If user is closer, they win;
   - If dealer is closer, they win;
   - If userScore === dealerScore, draw;
+* Function to end game and loop again, keep win tally;
+* Function to initialise the game, called at the bottom of the code.
 
 ### Overview of Build
 
@@ -47,18 +49,23 @@ Some of the key JavaScript skills being utilised:
 - Use of functions to store steps in code;
 - Use of single and multiple arguments passed through function to limit amount of code used to update scores and arrays;
 
+    ```javascript
     function dealNew(arr, whoScore) {
-      randNew = randHand(2,11)
-      addNew = arr.push(randNew);
-      whoScore += randNew;
-      return whoScore;
+      const randNew = randHand(2,11);
+      // Push new hand to array
+      arr.push(randNew);
+      // Add new hand score to player's score
+      return whoScore + randNew;
     }
+    ```
 
 - Use of Math.floor() and Maths.random() to generate random whole numbers:
     
+    ```javascript
     function randHand(x,y) {
       return Math.floor(Math.random() * (y - x + 1)) + x;
     }
+    ```
 
 - While loop to continue game play under certain conditions:
 - Use of conditionals to check for revert to next function state;
@@ -67,8 +74,8 @@ Some of the key JavaScript skills being utilised:
 ## Suggested future changes
 
 - Add images and score board to html so that game becomes based in browser and not through console;
-- Add an output option to limit the repetition of the message displayed in alerts;
-- Add a play again option for user to play a  game from the start (possibly keeping a running total of all wins). This would involve resetting the stored arrays and running scores;
+- ✅ ~~Add an output option to limit the repetition of the message displayed in alerts;~~
+- ✅ ~~Add a play again option for user to play a  game from the start (possibly keeping a running total of all wins). This would involve resetting the stored arrays and running scores;~~
 
 ## Screenshot
 
