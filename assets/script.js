@@ -1,9 +1,10 @@
 // Declare variables
-let dealerHand = [randHand(2,11)];
-let userHand = [randHand(4,21)];
-let dealerScore = dealerHand[0];
-let userScore = userHand[0];
-let blackjack = 21;
+const dealerHand = [];
+const userHand = [];
+let dealerScore = 0;
+let userScore = 0;
+const blackjack = 21;
+let output;
 
 // Choose random number
 function randHand(x,y) {
@@ -14,38 +15,22 @@ function randHand(x,y) {
 // arr relates to either dealerHand or userHand
 // whoScore related to either dealerScore or userScore
 function dealNew(arr, whoScore) {
-  randNew = randHand(2,11)
+  const randNew = randHand(2,11);
   // Push new hand to array
-  addNew = arr.push(randNew);
+  arr.push(randNew);
   // Add new hand score to player's score
-  whoScore += randNew;
-  return whoScore;
-}
-
-// Ask user if they want to play
-let gameStart = confirm("Do you want to play Blackjack?");
-if (gameStart) {
-  // Check if user already has Blackjack
-  if (userScore === blackjack) {
-    alert("Blackjack! You win!");
-  // Begin user gameplay state
-  } else {
-    userLoop();
-  }
-}
-else {
-  alert("Game Over!");
+  return whoScore + randNew;
 }
 
 // User gameplay state
 function userLoop() {
   let hit = true;
   while (hit) {
+    output = generateScoreMsg(userHand, userScore, dealerHand, dealerScore);
     // Share both scores with user, invite to hit or stick
     if (userScore < blackjack) {
       hit = confirm(`
-      Your hand is ${userHand.join(", ")} and your score is ${userScore}.
-      Dealer score is ${dealerScore}.
+      ${output}
       Click Ok to Hit, or Cancel to Stick.`);
         // If user wants to hit, add dealNew to userHand and userScore
         if (hit) {
@@ -59,8 +44,7 @@ function userLoop() {
     else if (userScore > blackjack) {
       alert(`
       You are bust!
-      Your hand is ${userHand.join(", ")} and your score is ${userScore}.
-      Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`);
+      ${output}`);
       break;
     } 
     // User stick, begin dealer gameplay state
@@ -71,25 +55,25 @@ function userLoop() {
   }
 }
 
-// Logic for when it is the dealer's turn to play
+// Dealer gameplay state
 function dealerLoop() {
 let hit = true;
   while (hit) {
+    output = generateScoreMsg(userHand, userScore, dealerHand, dealerScore);
     if (dealerScore <= userScore) {
       // Dealer always hits when his score is less than the users && less than 17
       if (dealerScore < 17) {
       alert(`
-      Your hand is ${userHand.join(", ")} and your score is ${userScore}.
-      Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.
+      ${output}.
       Dealer will draw a new card.`);
       dealerScore = dealNew(dealerHand, dealerScore);
       }
       // Dealer bust
       else if (dealerScore > 21){
-        alert(`
-        Dealer bust!
-        Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`);
-        break;
+      alert(`
+      Dealer bust!
+      ${output}.`);
+      break;
       }
       // Dealer stick (17 or over && not bust)
       else {
@@ -101,7 +85,7 @@ let hit = true;
     else if (dealerScore > 21){
       alert(`
       Dealer bust!
-      Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`);
+      ${output}.`);
       break;
     }
     // Dealer stick (17 or over && not bust)
@@ -117,31 +101,56 @@ function compareScores() {
   // Check how far each user is from 21
   let dealComp = blackjack - dealerScore;
   let userComp = blackjack - userScore;
+  output = generateScoreMsg(userHand, userScore, dealerHand, dealerScore);
   // User win state
   if (userComp < dealComp) {
-    alert(`
-    You win! 
-    Your hand is ${userHand.join(", ")} and your score is ${userScore}.
-    Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`);
-    return;
+      alert(`
+      You win! 
+      ${output}`);
+      return;
   }
   // Dealer win state
   else if (userComp > dealComp) {
-    alert(`You lose! 
-    Your hand is ${userHand.join(", ")} and your score is ${userScore}.
-    Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`);
-    return;
+      alert(`
+      You lose! 
+      ${output}`);
+      return;
   }
   // Draw state
   else {
-    alert(`You draw!
-    Your hand is ${userHand.join(", ")} and your score is ${userScore}.
-    Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`);
-    return;
+      alert(`
+      You draw!
+      ${output}`);
+      return;
   }
 }
 
 // Save an output for the alert message contents
-let output = `
-Your hand is ${userHand.join(", ")} and your score is ${userScore}.
-Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`
+function generateScoreMsg(userHand, userScore, dealerHand, dealerScore) {
+  return `
+      Your hand is ${userHand.join(", ")} and your score is ${userScore}.
+      Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`;
+}
+
+function start() {
+  // Ask user if they want to play
+  let gameStart = confirm("Do you want to play Blackjack?");
+  if (gameStart) {
+    dealerHand.push(randHand(2,11));
+    userHand.push(randHand(4,21));
+    dealerScore = dealerHand[0];
+    userScore = userHand[0];
+    // Check if user already has Blackjack
+    if (userScore === blackjack) {
+      alert("Blackjack! You win!");
+    // Begin user gameplay state
+    } else {
+      userLoop();
+    }
+  }
+  else {
+    alert("Game Over!");
+  }
+}
+
+start()
