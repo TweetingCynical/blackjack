@@ -139,21 +139,29 @@ function generateScoreMsg(userHand, userScore, dealerHand, dealerScore) {
       Dealer's hand is ${dealerHand.join(", ")} and dealer score is ${dealerScore}.`;
 }
 
+// How to end the game and start again
 function end() {
+  // Empty the arrays with stored hand values
   dealerHand.length = 0;
   userHand.length = 0;
+  // Clear hand scores
   dealerScore = 0;
   userScore = 0;
+  // Tell user their total wins vs dealer total wins
   alert(`You have ${userWins} win(s). Dealer has ${dealerWins} win(s).`)
+  // Invoke start game again
   start()
 }
 
+// How to start the game
 function start() {
   // Ask user if they want to play
   let gameStart = confirm("Do you want to play Blackjack?");
   if (gameStart) {
+    // Push a random card to both players' hand arrays based on the rules of the game
     dealerHand.push(randHand(2,11));
     userHand.push(randHand(4,21));
+    // Set each player's initial score to the hand that was just chosen randomly
     dealerScore = dealerHand[0];
     userScore = userHand[0];
     // Check if user already has Blackjack
@@ -168,6 +176,7 @@ function start() {
   }
   else {
     alert(`Game Over!\nYou had ${userWins} win(s). Dealer had ${dealerWins} win(s).`);
+    // Prevent never ending game over loop
     return false;
   }
 }
